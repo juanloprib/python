@@ -16,6 +16,7 @@
       - [Numeric operations](#numeric-operations)
     - [Strings](#strings)
       - [String methods](#string-methods)
+    - [Booleans](#booleans)
     - [Lists](#lists)
       - [List methods](#list-methods)
     - [Tuples](#tuples)
@@ -24,6 +25,11 @@
       - [Set methods](#set-methods)
     - [Lists vs Tuples vs Sets](#lists-vs-tuples-vs-sets)
     - [Dictionaries](#dictionaries)
+  - [If statements](#if-statements)
+    - [If and else](#if-and-else)
+    - [Comparison operators](#comparison-operators)
+    - [Logical operators](#logical-operators)
+    - [Elif](#elif)
   - [Functions](#functions)
   - [Functions for the terminal](#functions-for-the-terminal)
   - [Loops](#loops)
@@ -227,6 +233,16 @@ greeting_modified = greeting.replace("Hello", "Hi") # replaces a part of the str
 greeting_length = len(greeting) # returns the length of the string
 ```
 
+### Booleans
+
+Booleans are used to store `True` or `False` values.
+
+```python
+is_student = True
+is_underage = False
+print(is_student, is_underage) # True False
+```
+
 ### Lists
 
 Collections are used to store multiple values in a single variable.
@@ -400,6 +416,110 @@ person = {
     }
 }
 print(person["parents"]["mother"]) # Mary
+```
+
+## If statements
+
+### If and else
+
+The `if` statement is used to execute a block of code if a condition is true.
+
+```python
+is_student = True
+if is_student:
+    print("The person is a student")
+```
+
+The `if` statement can have an `else` block that is executed if the first condition is false.
+
+```python
+is_student = False
+if is_student:
+    print("The person is a student")
+else:
+    print("The person is not a student")
+```
+
+### Comparison operators
+
+Comparison operators are used to compare two values.
+The result of a comparison is a boolean value.
+
+```python
+x = 5
+y = 10
+print(x == y) # Are they equal? False
+print(x != y) # Are they different? True
+print(x > y) # Is x greater than y? False
+print(x < y) # Is x less than y? True
+print(x >= y) # Is x greater than or equal to y? False
+print(x <= y) # Is x less than or equal to y? True
+```
+
+### Logical operators
+
+Logical operators are used to combine multiple conditions.
+The result of a logical operation is a boolean value.
+The `and` operator returns `True` if both conditions are true.
+
+```python
+bored = True
+has_money = True
+
+if bored and has_money:
+    print("Go to the cinema")
+else:
+    print("Stay at home")
+```
+
+The `or` operator returns `True` if at least one of the conditions is true.
+
+```python
+sick = False
+has_homework = True
+
+if sick or has_homework:
+    print("Stay at home")
+else:
+    print("Go to the cinema")
+```
+
+The `not` operator returns `True` if the condition is false.
+
+```python
+has_money = True
+is_sick = False
+
+if not is_sick and has_money:
+    print("Go to the cinema")
+else:
+    print("Stay at home")
+```
+
+Logical operators can be assigned to variables.
+
+```python
+bored = True
+has_money = True
+go_to_cinema = bored and has_money
+if go_to_cinema:
+    print("Go to the cinema")
+else:
+    print("Stay at home")
+```
+
+### Elif
+
+The `if` statement can have multiple `elif` blocks that are executed if the previous conditions are false.
+
+```python
+age = 30
+if age < 18:
+    print("The person is underage")
+elif age < 30:
+    print("The person is young") # only printed if the age is between 18 and 29
+else:
+    print("The person is an adult")
 ```
 
 ## Functions
