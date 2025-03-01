@@ -5,8 +5,6 @@
 - [Learn Python](#learn-python)
   - [Table of Contents](#table-of-contents)
   - [General Information](#general-information)
-  - [Virtual Environment](#virtual-environment)
-  - [Dependencies](#dependencies)
   - [Files](#files)
     - [Python Files](#python-files)
     - [Jupiter Notebooks](#jupiter-notebooks)
@@ -43,7 +41,9 @@
     - [Methods](#methods)
     - [Inheritance](#inheritance)
   - [Type hints](#type-hints)
-  - [Common libraries](#common-libraries)
+  - [Virtual Environment](#virtual-environment)
+  - [Libraries (dependencies)](#libraries-dependencies)
+    - [requirements.txt](#requirementstxt)
 
 ## General Information
 
@@ -61,60 +61,16 @@ Depending on the operating system, the commands may vary.
 The python command can be `python`, `python3`, or `py`.
 For simplicity, the command `py` will be used in this document.
 
+To use the command line:
+
+* Windows: Open the command prompt.
+* MacOS: Open the terminal.
+* Linux: Open the terminal.
+
 To check the installed version of Python, run the following command:
 
 ```bash
 py --version
-```
-
-## Virtual Environment
-
-To create a virtual environment, run the following command:
-
-```bash
-py -m venv envname
-```
-
-To activate the virtual environment, run the following command:
-
-```bash
-./envname/Scripts/activate
-```
-
-To deactivate the virtual environment, run the following command:
-
-```bash
-deactivate
-```
-
-If you need a different version of Python, first check the installed versions with `py --list`.
-You can install all the python versions you need and then create the virtual environment with the desired version.
-To create a virtual environment with a specific version of Python, run the following command:
-
-```bash
-py -3.8 -m venv envname
-```
-
-## Dependencies
-
-Create a file named `requirements.txt` and add the dependencies.
-Notice that the version of the dependencies is optional.
-
-```txt
-numpy
-pandas==1.0.3
-```
-
-To install the dependencies, run the following command:
-
-```bash
-pip install -r requirements.txt
-```
-
-Then you can check the installed dependencies with the following command:
-
-```bash
-pip list
 ```
 
 ## Files
@@ -148,7 +104,8 @@ Jupyter Notebooks are widely used in data science and machine learning.
 When using Google Colab, the files are Jupyter Notebooks.
 
 Jupyter Notebooks are made of sections called cells.
-These files can have two types of cells:
+One Jupyter Notebook can have multiple cells.
+There are two types of cells:
 
 - Code cell: Contains python code. Each code cell can be executed independently.
 - Markdown cell: Contains text, images, and other elements.
@@ -873,7 +830,37 @@ Type hints are not enforced by Python.
 They are used to help with code readability and to catch errors early.
 The data types are written as follows:
 
-## Common libraries
+## Virtual Environment
+
+There are different versions of Python, and sometimes you need to use a specific version.
+Use virtual environments to avoid conflicts between different versions of Python and libraries (which we'll cover later).
+To create a virtual environment, run the following command in the terminal:
+
+```bash
+py -m venv envname
+```
+
+To activate the virtual environment, run the following command:
+
+```bash
+./envname/Scripts/activate
+```
+
+To deactivate the virtual environment, run the following command:
+
+```bash
+deactivate
+```
+
+If you need a different version of Python, first check the installed versions with `py --list`.
+You can install all the python versions you need and then create the virtual environment with the desired version.
+To create a virtual environment with a specific version of Python, run the following command:
+
+```bash
+py -3.8 -m venv envname
+```
+
+## Libraries (dependencies)
 
 Python has a lot of libraries that can be used to make your life easier.
 These are created by other developers and can be installed with the `pip` command.
@@ -893,4 +880,28 @@ from validate_email import validate_email
 
 is_valid = validate_email("yo@ejemplo.com")
 print(is_valid)
+```
+
+### requirements.txt
+
+When you are working on a project, you can create a `requirements.txt` file that contains all the libraries that your project needs.
+This is useful when you want to share your project with others, so they can install the dependencies easily and have the same environment as you.
+Create a file named `requirements.txt` and add the dependencies.
+Notice that the version of the dependencies is optional.
+
+```txt
+numpy
+pandas==1.0.3
+```
+
+To install the dependencies, run the following command:
+
+```bash
+pip install -r requirements.txt
+```
+
+Then you can check the installed dependencies with the following command:
+
+```bash
+pip list
 ```
