@@ -31,7 +31,7 @@
     - [Logical operators](#logical-operators)
     - [Elif](#elif)
   - [Functions](#functions)
-  - [Functions for the terminal](#functions-for-the-terminal)
+  - [Working with the terminal](#working-with-the-terminal)
   - [Loops](#loops)
     - [For loop](#for-loop)
       - [Enumerate](#enumerate)
@@ -59,9 +59,6 @@ Python is known for its simplicity and readability.
 To run Python code, you need to have Python installed on your computer.
 Install Python from the [official website](https://www.python.org/downloads/).
 
-You can also try an online Python interpreter like [Google Colab](https://colab.research.google.com/).
-This is a good option if you don't want to install Python on your computer.
-
 After installing, you can run python commands from the terminal.
 Depending on the operating system, the commands may vary.
 The python command can be `python`, `python3`, or `py`.
@@ -73,11 +70,15 @@ To use the command line:
 * MacOS: Open the terminal.
 * Linux: Open the terminal.
 
-To check the installed version of Python, run the following command:
+To check the installed version of Python, run the following command in the terminal:
 
 ```bash
 py --version
 ```
+
+To edit Python files, you can use a text editor like [Visual Studio Code](https://code.visualstudio.com/).
+You can also try an online Python interpreter like [Google Colab](https://colab.research.google.com/).
+This is a good option if you don't want to install Python on your computer.
 
 ## Files
 
@@ -90,13 +91,13 @@ Imagine you have a file named `filename.py` with the following content:
 print("Hello, World!")
 ```
 
-To run a Python file, use the following command:
+To run a Python file, use the following command in the terminal:
 
 ```bash
 py filename.py
 ```
 
-To run a Python file with arguments, use the following command:
+To run a Python file with arguments, use the following command in the terminal (more about arguments later):
 
 ```bash
 py filename.py arg1 arg2
@@ -617,7 +618,7 @@ print(x) # 10
 
 This should not be used often because it can make the code harder to understand.
 
-## Functions for the terminal
+## Working with the terminal
 
 A python file can output text to the terminal using the `print` function.
 
@@ -632,25 +633,24 @@ name = input("Enter your name: ")
 print("Hello, " + name)
 ```
 
-The `sys` module can be used to get arguments from the terminal.
-
-```python
-import sys
-
-print(sys.argv)
-```
-
-The `sys.argv` list contains the name of the file and the arguments passed to it.
+You can pass arguments to a python file when it is executed from the terminal.
 
 ```bash
 py filename.py arg1 arg2
 ```
+
+The `sys` module can be used to get arguments from the terminal.
+The `sys.argv` list contains the name of the file and the arguments passed to it when the file is executed from the terminal:
 
 ```python
 import sys
 
 print(sys.argv) # ['filename.py', 'arg1', 'arg2']
 ```
+
+This is useful if you need the same script to behave differently depending on the arguments passed to it.
+For example, you can create a script that reads a file and prints its content.
+You can pass the file name as an argument to the script.
 
 ## Loops
 
