@@ -50,6 +50,10 @@
   - [Virtual Environment](#virtual-environment)
   - [Libraries (dependencies)](#libraries-dependencies)
     - [requirements.txt](#requirementstxt)
+    - [Pandas](#pandas)
+      - [DataFrames](#dataframes)
+      - [Filtering and sorting](#filtering-and-sorting)
+      - [Reading and writing files](#reading-and-writing-files)
 
 ## General Information
 
@@ -168,7 +172,7 @@ print(my_variable) # Hello, World! is printed in the console
 ```
 
 The `print(my_variable)` is used to output the value of the variable `my_variable` to the console.
-Although a variable can be euqal to a number, and then to a text, it is not recommended to do this.
+Although a variable can be equal to a number, and then to a text, it is not recommended to do this.
 It is better to use variables for the same type of data.
 
 ## Data types
@@ -1024,4 +1028,153 @@ Then you can check the installed dependencies with the following command:
 
 ```bash
 pip list
+```
+
+### Pandas
+
+Pandas is a library that is widely used in data science.
+It is used to manipulate data in a structured way.
+To install the pandas library, run the following command in the terminal:
+
+```bash
+pip install pandas
+```
+
+#### DataFrames
+
+Dataframes are like tables in a database or a spreadsheet.
+They are used to store data in rows and columns.
+Let's create a simple dataframe:
+
+```python
+import pandas as pd
+
+data = {
+    "name": ["John", "Jane", "Joe"],
+    "age": [30, 25, 35],
+    "city": ["New York", "Los Angeles", "Chicago"]
+}
+
+df = pd.DataFrame(data)
+print(df)
+```
+
+This is a simple example of how to use the pandas library.
+DataFrames are a powerful tool to store and manipulate data.
+You can pass a dictionary to the `pd.DataFrame` function to create a DataFrame.
+To get a column from the DataFrame, use the column name as an index.
+In Pandas, a column is called a Series.
+
+```python
+print(df["name"])
+```
+
+To get multiple columns from the DataFrame, use a list of column names.
+
+```python
+print(df[["name", "age"]])
+```
+
+To get a row from the DataFrame, use the `iloc` method.
+
+```python
+print(df.iloc[0])
+```
+
+To get multiple rows from the DataFrame, use the `iloc` method with a list of indexes.
+
+```python
+print(df.iloc[[0, 2]])
+print(df.iloc[0:2])
+```
+
+You can set the index of the DataFrame with the `set_index` method to access the rows by the index.
+
+```python
+df.set_index("name", inplace=True)
+print(df.loc["John"]) # returns the row with the index John
+```
+
+To get the maximum value of a column, use the `max` method.
+
+```python
+print(df["age"].max())
+```
+
+To get the minimum value of a column, use the `min` method.
+
+```python
+print(df["age"].min())
+```
+
+To see the first 5 rows of the DataFrame, use the `head` method.
+
+```python
+print(df.head(5))
+```
+
+To see the last 8 rows of the DataFrame, use the `tail` method.
+
+```python
+print(df.tail(8))
+```
+
+#### Filtering and sorting
+
+You can filter the DataFrame with a condition.
+
+```python
+print(df[df["age"] > 30])
+```
+
+You can also filter using the `query` method.
+
+```python
+print(df.query("age > 30"))
+```
+
+You can filter the DataFrame with multiple conditions.
+
+```python
+print(df[(df["age"] > 30) & (df["city"] == "New York")])
+print(df.query("age > 30 and city == 'New York'")) # the same as the previous line
+```
+
+You can sort the DataFrame by a column.
+
+```python
+print(df.sort_values("age"))
+```
+
+To sort the DataFrame in descending order, use the `ascending` parameter.
+
+```python
+print(df.sort_values("age", ascending=False))
+```
+
+To sort by multiple columns, use a list of column names.
+
+```python
+print(df.sort_values(["age", "name"]))
+```
+
+To sort by multiple columns in different orders, use a list of tuples.
+
+```python
+print(df.sort_values(["age", "name"], ascending=[False, True]))
+```
+
+#### Reading and writing files
+
+Pandas can read and write files.
+To read a CSV file, use the `read_csv` method.
+
+```python
+df = pd.read_csv("filename.csv")
+```
+
+To write a DataFrame to a CSV file, use the `to_csv` method.
+
+```python
+df.to_csv("filename.csv", index=False)
 ```
