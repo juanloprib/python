@@ -54,6 +54,11 @@
       - [DataFrames](#dataframes)
       - [Filtering and sorting](#filtering-and-sorting)
       - [Reading and writing files](#reading-and-writing-files)
+    - [Scikit-learn](#scikit-learn)
+    - [Train and test data](#train-and-test-data)
+      - [Pipelines](#pipelines)
+      - [Cross Validation](#cross-validation)
+      - [Grid search](#grid-search)
 
 ## General Information
 
@@ -1062,6 +1067,19 @@ print(df)
 This is a simple example of how to use the pandas library.
 DataFrames are a powerful tool to store and manipulate data.
 You can pass a dictionary to the `pd.DataFrame` function to create a DataFrame.
+You can also create a Dataframe inside the DataFrame function.
+
+```python
+df = pd.DataFrame(
+    [
+        ["John", 30, "New York"],
+        ["Jane", 25, "Los Angeles"],
+        ["Joe", 35, "Chicago"]
+    ],
+    columns=["name", "age", "city"]
+)
+```
+
 To get a column from the DataFrame, use the column name as an index.
 In Pandas, a column is called a Series.
 
@@ -1078,14 +1096,16 @@ print(df[["name", "age"]])
 To get a row from the DataFrame, use the `iloc` method.
 
 ```python
-print(df.iloc[0])
+print(df.iloc[0]) # returns the first row
+print(df.iloc[0, 1]) # returns the first row and the second column
 ```
 
 To get multiple rows from the DataFrame, use the `iloc` method with a list of indexes.
 
 ```python
-print(df.iloc[[0, 2]])
-print(df.iloc[0:2])
+print(df.iloc[[0, 2]]) # returns the first and third rows
+print(df.iloc[0:5]) # returns the first 5 rows
+print(df.iloc[2:5, 1:3]) # returns the third to fifth rows and the second to third columns
 ```
 
 You can set the index of the DataFrame with the `set_index` method to access the rows by the index.
@@ -1117,6 +1137,12 @@ To see the last 8 rows of the DataFrame, use the `tail` method.
 
 ```python
 print(df.tail(8))
+```
+
+The sample method returns a random sample of the DataFrame.
+
+```python
+print(df.sample(2)) # returns 2 random rows
 ```
 
 #### Filtering and sorting
@@ -1178,3 +1204,184 @@ To write a DataFrame to a CSV file, use the `to_csv` method.
 ```python
 df.to_csv("filename.csv", index=False)
 ```
+
+### Scikit-learn
+
+Scikit-learn is a library that is widely used in machine learning.
+It is a kit with many tools to work with data and machine learning models.
+To install the scikit-learn library, run the following command in the terminal:
+
+```bash
+pip install scikit-learn
+```
+
+Scikit-learn comes with many datasets that can be used to test machine learning models.
+For example, the `load_diabetes` function returns a dataset with information about diabetes.
+This dataset is used to predict the progression of diabetes, where the target is a continuous number.
+The following is a simple example of how to use the scikit-learn library:
+
+```python
+from sklearn.datasets import load_diabetes
+from sklearn.ensemble import RandomForestRegressor
+
+diabetes = load_diabetes()
+X = diabetes.data
+y = diabetes.target
+
+model = RandomForestRegressor(n_estimators=100, random_state=15)
+model.fit(X, y)
+
+prediction = model.predict([X[0]])
+real_value = y[0]
+print(prediction, real_value)
+```
+
+The convention is to use `X` for the features and `y` for the target.
+Features are the data that is used to make the prediction, like the house size, the number of rooms, and so on.
+The target is the data that is being predicted, in this case, the house price.
+The `fit` method is used to train the model with the data.
+
+### Train and test data
+
+Data can be split into training and testing data.
+This is a good practice to evaluate the model.
+A good idea is to use 80% of the data for training and 20% for testing.
+The training data is used to train the model, and the testing data is used to test the model.
+In the following example we use the testing data to compare the prediction with the real value.
+
+```python
+from sklearn.model_selection import train_test_split
+from sklearn.datasets import load_diabetes
+from sklearn.linear_model import LinearRegression
+from matplotlib import pyplot as plt
+
+diabetes = load_diabetes()
+X = diabetes.data
+y = diabetes.target
+
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=15)
+
+model = LinearRegression()
+model.fit(X_train, y_train)
+
+prediction = model.predict(X_test)
+
+plt.scatter(y_test, prediction)
+plt.xlabel('True Values')
+plt.ylabel('Predictions')
+plt.show()
+```
+
+This graph is used to compare the prediction with the real value.
+In a perfect scenario, the points would be on a straight line, because the prediction would be the same as the real value.
+The closer the points are to the line, the better the model is.
+In this case, the graph shows that the model can be improved, but at least we tested it.
+
+In cases where the data is not balanced, for example, when the target has more zeros than ones, it is a good practice to use the `stratify` parameter.
+The `stratify` parameter is used to split the data in a way that the proportion of the target is the same in the training and testing data.
+Use it when the problem is not a regression problem, but a classification problem, and when the data is not perfectly balanced.
+
+```python
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=15, stratify=y)
+```
+
+#### Pipelines
+
+Sometimes we need to process the data before training the model.
+Pipelines are used to combine multiple steps, like scaling the data and training the model.
+In cases where the features are not in the same scale, it is a good practice to scale the data.
+For example, the `StandardScaler` class can be used in cases where the features are normally distributed.
+Although the StandardScaler can be used separately, it is a good practice to use the `Pipeline` class to combine the scaler with the model.
+
+```python
+from sklearn.pipeline import Pipeline
+from sklearn.preprocessing import StandardScaler
+from sklearn.linear_model import LogisticRegression
+from sklearn.datasets import load_iris
+from sklearn.model_selection import train_test_split
+
+iris = load_iris()
+X = iris.data
+y = iris.target
+
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=15)
+
+pipe = Pipeline([
+    ("scaler", StandardScaler()),
+    ("model", LogisticRegression())
+])
+
+pipe.fit(X_train, y_train)
+prediction = pipe.predict(X_test)
+```
+
+#### Cross Validation
+
+Before we learned how to split the data into training and testing data.
+This is a good practice, but it can be improved.
+The problem with splitting the data is that we are not sure if the model is good or if we were lucky with the training and testing data.
+The `cross_val_score` function can be used to evaluate the model with different training and testing data.
+Cross validation divides the data into in groups, and then trains the model with some groups and tests it with the other groups.
+This is repeated until all the groups have been used for testing.
+
+```python
+from sklearn.model_selection import cross_val_score
+from sklearn.linear_model import LinearRegression
+from sklearn.datasets import load_diabetes
+
+diabetes = load_diabetes()
+X = diabetes.data
+y = diabetes.target
+
+model = LinearRegression()
+scores = cross_val_score(model, X, y, cv=5)
+print(scores)
+```
+
+When using cross validation, you may still use the `train_test_split` function to split the data into training and testing data.
+In this case you would use the `cross_val_score` function using the training data.
+This way you can evaluate the model with the remaining testing data.
+
+#### Grid search
+
+The `GridSearchCV` class can be used to find the best parameters for a model.
+We can also use cross validation to evaluate the model, using the `cv` parameter.
+The `param_grid` parameter is used to pass the parameters that we want to test.
+
+```python
+from sklearn.neighbors import KNeighborsRegressor
+from sklearn.preprocessing import StandardScaler
+from sklearn.pipeline import Pipeline
+from sklearn.model_selection import GridSearchCV
+import matplotlib.pyplot as plt
+import pandas as pd
+
+boston = pd.read_csv("boston.csv", delimiter=r'\s+', header=None, engine='python')
+
+X = boston.iloc[:, 0:-1]
+y = boston.iloc[:, -1]
+
+pipe = Pipeline([
+    ("scaler", StandardScaler()),
+    ("model", KNeighborsRegressor(n_neighbors=1))
+])
+
+param_grid = {
+    "model__n_neighbors": [1, 3, 5, 7, 9, 11, 13, 15,  17, 19]
+}
+
+grid = GridSearchCV(pipe, param_grid, cv=5)
+grid.fit(X, y)
+
+print(grid.best_params_) # prints the best parameters
+
+plt.plot(param_grid["model__n_neighbors"], grid.cv_results_["mean_test_score"])
+plt.xlabel("n_neighbors")
+plt.ylabel("mean_test_score")
+plt.show()
+```
+
+The mean test score is used to evaluate the model.
+The higher the mean test score, the better the model is.
+The graph shows the mean test score for different values of `n_neighbors`.
+The best value of `n_neighbors` is the one that has the highest mean test score.
